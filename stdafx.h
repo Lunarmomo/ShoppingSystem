@@ -28,3 +28,4 @@
 #include "ShoppingList.h"
 #include "Cashier.h"
 #include "DbUtil.h"
+#include "Pay.h"
