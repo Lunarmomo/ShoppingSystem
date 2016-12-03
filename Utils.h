@@ -10,9 +10,6 @@ class Utils
     static MYSQL *conn;
 public:
 	static double getDiscountPrice(string memType,double price);
-	static string getMemberTypeStr(string memType);
-	static string getMemberType(double score);
-	static double getMemberScore(string memType,double money);
 	static MYSQL *GetConn();
 	static void closeConnect(MYSQL *myConn);
 	static string doubleToString(double num);

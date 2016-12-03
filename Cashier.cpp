@@ -13,6 +13,7 @@ Cashier::Cashier(ShoppingList *list)
 }
 Cashier::~Cashier(){}
 
+
 void Cashier::outputToText()
 {
 	//ofstream fout("C:/Users/hank/Desktop/国内pnr导入/作业/record.txt");

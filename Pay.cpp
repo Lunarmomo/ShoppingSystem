@@ -10,7 +10,6 @@ Pay::Pay(DbUtil *mdbUtil)
 {
 	list = new ShoppingList();
 	cashier=new Cashier(list);
-	conn = Utils::GetConn();
 	cout.setf(ios::fixed);
 	cout.precision(2);
 	dbUtil = mdbUtil;
@@ -27,7 +26,6 @@ void Pay::pay_list()
 	if (memberType != "0")write_score();
 	cashier->outputToText();
 	cashier->PrintList();
-	Utils::closeConnect(conn);
 }
 
 void Pay::additem()
@@ -84,7 +82,7 @@ void Pay::member_pay()
 	cout << "性别：" << member->getMemSex() << "\t";
 	cout << "手机号：" << member->getMemPhone() << "\t";
 	cout << "积分：" << member->getMemScore() << "\t";
-	cout << "会员级别：" << Utils::getMemberTypeStr(member->getMemType()) << endl;
+	cout << "会员级别：" << member->getMemberTypeStr() << endl;
 	memberType = member->getMemType();
 	/*if(memberType == "1"){
 	cout<<"会员级别："<<"金卡"<<endl;
@@ -218,12 +216,14 @@ void Pay::pay_with_shopcard()
 
 void Pay::write_score()
 {
-	double score = Utils::getMemberScore(memberType, cashier->GetTotalMemberMoney(memberType));
+	double score = member->getMemberScore(cashier->GetTotalMemberMoney(memberType));
 	double newMemScore = member->getMemScore() + score;
-	string newMemType = Utils::getMemberType(newMemScore);
+	member->setMemScore(newMemScore);
+	string newMemType = member->getMemberType();
+	member->setMemType(newMemType);
 	dbUtil->UpdateMember(member->getMemCode(), newMemScore, newMemType);
 	cout << "本次获得积分:" << score << endl;
 	if (member->getMemType() != newMemType){
-		cout << "会员卡升级为:" << Utils::getMemberTypeStr(newMemType) << endl;
+		cout << "会员卡升级为:" << member->getMemberTypeStr() << endl;
 	}
 }

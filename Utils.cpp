@@ -11,90 +11,52 @@ MYSQL *Utils::conn;
 
 //如果是金卡，输入price代表单价，输出表示该商品打折后单价
 //如果是银卡及普通卡，输入price代表商品总价，输出代表打折后总价
-double Utils::getDiscountPrice(string memType,double price){
+double Utils::getDiscountPrice(string memType, double price){
 	double discountPrice;
-	if(memType == "1"){//金卡
-		if(price <= 10.00){
+	if (memType == "1"){//金卡
+		if (price <= 10.00){
 			discountPrice = price;
-		}else if (price <= 20.00)
+		}
+		else if (price <= 20.00)
 		{
 			discountPrice = price*0.95;
-		}else
+		}
+		else
 		{
 			discountPrice = price*0.9;
 		}
-	}else if (memType == "2")//银卡
+	}
+	else if (memType == "2")//银卡
 	{
-		if(price <= 1000.00){
+		if (price <= 1000.00){
 			discountPrice = price*0.95;
-		}else if (price <= 2000.00)
-		{
-			discountPrice = 1000*0.95 + (price-1000)*0.9;
-		}else
-		{
-			discountPrice = 1000*0.95 + 1000*0.9 + (price-2000)*0.85;
 		}
-	}else if (memType == "3")//普通卡
+		else if (price <= 2000.00)
+		{
+			discountPrice = 1000 * 0.95 + (price - 1000)*0.9;
+		}
+		else
+		{
+			discountPrice = 1000 * 0.95 + 1000 * 0.9 + (price - 2000)*0.85;
+		}
+	}
+	else if (memType == "3")//普通卡
 	{
-		if(price <= 2000.00){
+		if (price <= 2000.00){
 			discountPrice = price;
-		}else if (price <= 5000.00)
+		}
+		else if (price <= 5000.00)
 		{
-			discountPrice = 2000 + (price-2000)*0.95;
-		}else
+			discountPrice = 2000 + (price - 2000)*0.95;
+		}
+		else
 		{
-			discountPrice = 2000 + 3000*0.95 + (price-5000)*0.9;
+			discountPrice = 2000 + 3000 * 0.95 + (price - 5000)*0.9;
 		}
 	}
 	return discountPrice;
 }
-//通过会员卡级别代码返回会员卡中文级别解释
-string Utils::getMemberTypeStr(string memType){
-	if(memType == "1"){
-		return "金卡";
-	}else if(memType == "2"){
-		return "银卡";
-	}else if(memType == "3"){
-		return "普通会员";
-	}else{
-		return "非会员";
-	}
 
-}
-//通过积分获取对应的会员级别
-string Utils::getMemberType(double score){
-	if(score < 10000.00){
-		return "3";
-	}else if(score < 50000.00){
-		return "2";
-	}else{
-		return "1";
-	}
-}
-//输入会员卡级别以及实际消费金额,返回本次消费所获取的积分
-double Utils::getMemberScore(string memType,double money){
-	double memScore = 0.0;
-	if(memType == "1"){
-		if(money <= 1000.00){
-			memScore = 1.5*money;
-		}else if(money <= 5000.00){
-			memScore = 1.5*1000 + (money-1000)*1.8;
-		}else{
-			memScore = 1.5*1000 + (5000-1000)*1.8 + (money-5000)*2;
-		}
-	}else if(memType == "2"){
-		if(money <= 2000.00){
-			memScore = 1.2*money;
-		}else if(money <= 5000.00){
-			memScore = 1.2*2000 + (money-2000)*1.5;
-		}else{
-			memScore = 1.8*2000 + (5000-2000)*1.5 + (money-5000)*1.8;
-		}
-	}else if(memType == "3"){
-		memScore = 0.5*money;
-	}
-	return memScore;
-}
 MYSQL * Utils::GetConn()//获取数据库连接
 {
 	if(NULL != conn)

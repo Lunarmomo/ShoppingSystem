@@ -9,6 +9,9 @@
 //#include<string>
 //#include<tchar.h>
 
+MYSQL *DbUtil::myConn;
+
+
 char* TCHAR2char(TCHAR* tchStr) 
 { 
 	size_t i;
@@ -93,7 +96,6 @@ bool DbUtil::exportCardData(string filename){
 	filepath = replace_all(filepath,"\\","/");//获取当前程序目录
 	//filepath = "C:/Users/hank/Desktop/国内pnr导入/作业/member3.txt";
 	string sql = "select card_code,card_money into outfile '" + filepath +  "' lines terminated by '\r\n' from card";
-	MYSQL *myConn = Utils::GetConn();
 	mysql_query(myConn,sql.c_str());//导出购物卡数据
 	long row = mysql_affected_rows(myConn);//导出记录数
 	cout<<mysql_error(myConn)<<endl;
@@ -131,7 +133,6 @@ bool DbUtil::exportMemberData(string filename){
 	filepath = replace_all(filepath,"\\","/");//获取当前程序目录
 	//filepath = "C:/Users/hank/Desktop/作业/member3.txt";
 	string sql = "select mem_code,mem_name,mem_sex,mem_phone,mem_score,mem_type into outfile '" + filepath +  "' lines terminated by '\r\n' from member";
-	MYSQL *myConn = Utils::GetConn();
 	mysql_query(myConn,sql.c_str());//导出会员数据
 	long row = mysql_affected_rows(myConn);//导出记录数
 	cout<<mysql_error(myConn)<<endl;
@@ -149,7 +150,6 @@ bool DbUtil::exportMemberData(string filename){
 
 Member *DbUtil::GetMember(string memCode){
 	string sql = "select * from member where mem_code = " + memCode;
-	MYSQL *myConn = Utils::GetConn();
 	mysql_query(myConn,sql.c_str());//查询
 	MYSQL_RES *result = mysql_store_result(myConn);//拿结果
 	unsigned int fieldCount = result->field_count;
@@ -174,7 +174,6 @@ bool DbUtil::UpdateMember(string memCode,double newMemScore,string newMemType){
 		typeAppend += ",mem_type=" + newMemType;
 	}
 	string sql = "update member set mem_score = " + oss.str() + typeAppend + " where mem_code = " + memCode;
-	MYSQL *myConn = Utils::GetConn();
 	mysql_query(myConn,sql.c_str());//更新 
 	long affectRow = mysql_affected_rows(myConn);//获取本次更新的行数，0表示未找到where语句对应的行，-1表示错误
 	if(affectRow > 0)
@@ -194,7 +193,6 @@ bool DbUtil::importBaseData()
 	string itemsSql = "load data local infile './database/items.txt' into table items character set gbk lines terminated by '\r\n' (item_code,item_name,item_place,item_price)";
 	string cardSql = "load data local infile './database/card.txt' into table card character set gbk lines terminated by '\r\n' (card_code,card_money)";
 	string memberSql = "load data local infile './database/member.txt' into table member character set gbk lines terminated by '\r\n' (mem_code,mem_name,mem_sex,mem_phone,mem_score,mem_type)";
-	MYSQL *myConn = Utils::GetConn();
 	mysql_query(myConn,itemsSql.c_str());//导入商品数据
 	long itemsRow = mysql_affected_rows(myConn);//导入记录数
 	mysql_query(myConn,cardSql.c_str());//导入购物卡数据
@@ -232,7 +230,6 @@ bool DbUtil::UpdateCards(string cardCode,double newCardMoney)
 	ostringstream oss;
 	oss<<newCardMoney;
 	string sql = "update card set card_money = " + oss.str() + " where card_code = " + cardCode;
-	MYSQL *myConn = Utils::GetConn();
 	mysql_query(myConn,sql.c_str());//更新 
 	long affectRow = mysql_affected_rows(myConn);//获取本次更新的行数，0表示未找到where语句对应的行，-1表示错误
 	if(affectRow > 0)
@@ -246,7 +243,6 @@ bool DbUtil::UpdateCards(string cardCode,double newCardMoney)
 Cards *DbUtil::GetCards(string cardCode)
 {
 	string sql = "select * from card where card_code = " + cardCode;
-	MYSQL *myConn = Utils::GetConn();
 	mysql_query(myConn,sql.c_str());//查询
 	MYSQL_RES *result = mysql_store_result(myConn);//拿结果
 	unsigned int fieldCount = result->field_count;
@@ -262,7 +258,6 @@ Cards *DbUtil::GetCards(string cardCode)
 Items *DbUtil::GetItems(string itemCode)
 {
 	string sql = "select * from items where item_code = " + itemCode;
-	MYSQL *myConn = Utils::GetConn();
 	mysql_query(myConn,sql.c_str());//查询
 	MYSQL_RES *result = mysql_store_result(myConn);//拿结果
 	unsigned int fieldCount = result->field_count;
@@ -278,8 +273,14 @@ Items *DbUtil::GetItems(string itemCode)
 	return item;
 }
 
+void DbUtil::closeConn()
+{
+	Utils::closeConnect(myConn);
+}
+
 DbUtil::DbUtil()
 {
+	myConn = Utils::GetConn();
 }
 DbUtil::~DbUtil()
 {
