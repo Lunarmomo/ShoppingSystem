@@ -14,11 +14,12 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	cout.setf(ios::fixed);
 	cout.precision(2);
-	DbUtil *dbUtil = NULL;
+	DbUtil *dbUtil = new DbUtil();
 
 	cout<<"----欢迎进入小罗购物中心后台管理系统----"<<endl<<endl;
 	start(dbUtil);
 	cout << endl << "*************欢迎您再次使用本购物结算系统**************\n";
+	dbUtil->closeConn();
 	system("pause");
 	return 0;
 }

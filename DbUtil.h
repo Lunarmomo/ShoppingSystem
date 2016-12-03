@@ -8,6 +8,8 @@
 using namespace std;
 class DbUtil
 {
+private:
+	static MYSQL *myConn;
 public:
     static Items *GetItems(string itemCode);//根据编号获取商品信息
 	static Cards *GetCards(string cardCode);//根据编号获取购物卡信息
@@ -18,6 +20,7 @@ public:
 	static bool exportMemberData(string filename);//导出会员数据记录
 	static bool exportCardData(string filename);//导出购物卡数据记录
 	static void createOriginalData();//专门用来给自己创建原始数据，100行一个文件
+	static void closeConn();
 	DbUtil();
 	~DbUtil();
 };

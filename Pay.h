@@ -11,7 +11,6 @@ class Pay
 {
 	ShoppingList *list;
 	Cashier *cashier;
-	MYSQL *conn;
 	Member *member;
 	DbUtil *dbUtil;
 	string memberType;

@@ -72,18 +72,14 @@ void ShoppingList::MemberPrint(string memType){
 		cout.width(16);
 		cout<<left<<m_list[i]->num;
 		cout.width(16);
-		cout<<left<<m_list[i]->item->GetItemPrice();
-		cout.width(16);
 		double price = m_list[i]->item->GetItemPrice();
+		cout<<left<<price;
+		cout.width(16);
 		double discountPrice;
-		if(memType == "1"){
-			discountPrice = Utils::getDiscountPrice(memType,price);
-		}
-		cout<<left<<m_list[i]->item->GetItemPrice()<<"\n";
+		discountPrice = Utils::getDiscountPrice(memType,price);
+		cout<<left<<discountPrice<<"\n";
 	}
-	if(memType == "1"){//½ð¿¨
 
-	}
 }
 void ShoppingList::Print()
 {

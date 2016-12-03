@@ -26,6 +26,9 @@ public:
 	void setMemPhone(string memPhone);
 	void setMemScore(double memScore);
 	void setMemType(string memType);
+	string getMemberTypeStr();
+	string getMemberType();
+	double getMemberScore(double money);
 	Member();
 	~Member();
 };
