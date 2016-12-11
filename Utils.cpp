@@ -65,7 +65,7 @@ MYSQL * Utils::GetConn()//获取数据库连接
 	}
 	string host = "localhost";
 	string user = "root";
-	string password = "root";
+	string password = "zt2358";
 	string dbname = "shoppingsystem";
 	unsigned int port = 3306;
 	string charset = "gbk";

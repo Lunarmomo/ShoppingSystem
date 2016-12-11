@@ -187,12 +187,12 @@ bool DbUtil::UpdateMember(string memCode,double newMemScore,string newMemType){
 bool DbUtil::importBaseData()
 {
 	//lines terminated by '\r\n' 防止最后一行字符入库出现/r
-	//string itemsSql = "load data local infile 'C:/Users/hank/Desktop/国内pnr导入/作业/items.txt' into table items character set gbk (item_code,item_name,item_place,item_price)";
-	//string cardSql = "load data local infile 'C:/Users/hank/Desktop/国内pnr导入/作业/card.txt' into table card character set gbk (card_code,card_money)";
-	//string memberSql = "load data local infile 'C:/Users/hank/Desktop/国内pnr导入/作业/member.txt' into table member character set gbk (mem_code,mem_name,mem_sex,mem_phone,mem_score,mem_type)";
-	string itemsSql = "load data local infile './database/items.txt' into table items character set gbk lines terminated by '\r\n' (item_code,item_name,item_place,item_price)";
-	string cardSql = "load data local infile './database/card.txt' into table card character set gbk lines terminated by '\r\n' (card_code,card_money)";
-	string memberSql = "load data local infile './database/member.txt' into table member character set gbk lines terminated by '\r\n' (mem_code,mem_name,mem_sex,mem_phone,mem_score,mem_type)";
+	//string itemsSql = "load data local infile './database/items.txt' into table items character set gbk lines terminated by '\r\n' (item_code,item_name,item_place,item_price)";
+	//string cardSql = "load data local infile './database/card.txt' into table card character set gbk lines terminated by '\r\n' (card_code,card_money)";
+	//string memberSql = "load data local infile './database/member.txt' into table member character set gbk lines terminated by '\r\n' (mem_code,mem_name,mem_sex,mem_phone,mem_score,mem_type)";
+	string itemsSql = "load data local infile 'D:/github/ShoppingSystem/database/items.txt' into table items character set gbk (item_code,item_name,item_place,item_price)";
+	string cardSql = "load data local infile 'D:/github/ShoppingSystem/database/card.txt' into table card character set gbk (card_code,card_money)";
+	string memberSql = "load data local infile 'D:/github/ShoppingSystem/database/member.txt' into table member character set gbk (mem_code,mem_name,mem_sex,mem_phone,mem_score,mem_type)";
 	mysql_query(myConn,itemsSql.c_str());//导入商品数据
 	long itemsRow = mysql_affected_rows(myConn);//导入记录数
 	mysql_query(myConn,cardSql.c_str());//导入购物卡数据
