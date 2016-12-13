@@ -1,5 +1,5 @@
-//学号：1352910 
-//姓名：周同     
+//Design Pattern Project
+//成员：1352910 周同，1452734 储港    
 //文件名：DbUtil.cpp 
 //描述:数据库操作类的处理
 
@@ -34,8 +34,7 @@ string& replace_all(string& str,const   string&   old_value,const   string&   ne
 
 void DbUtil::createOriginalData()
 {
-	//ofstream fout("C:/Users/hank/Desktop/作业/record.txt");
-	ofstream fout1("./database/card.txt");
+	ofstream fout1("D:/github/ShoppingSystem/database/card.txt");
 	if(fout1.is_open())
 	{
 		for(int i=1;i<=100;i++){
@@ -44,7 +43,7 @@ void DbUtil::createOriginalData()
 		}
 		fout1.close();
 	}
-	ofstream fout2("./database/member.txt");
+	ofstream fout2("D:/github/ShoppingSystem/database/member.txt");
 	if(fout2.is_open())
 	{
 		for(int i=1;i<=100;i++){
@@ -61,7 +60,7 @@ void DbUtil::createOriginalData()
 		}
 		fout2.close();
 	}
-	ofstream fout3("./database/items.txt");
+	ofstream fout3("D:/github/ShoppingSystem/database/items.txt");
 	if(fout3.is_open())
 	{
 		for(int i=1;i<=100;i++){
@@ -76,16 +75,12 @@ void DbUtil::createOriginalData()
 
 bool DbUtil::exportCardData(string filename){
 
-	TCHAR buf[MAX_PATH];
-	GetCurrentDirectory(MAX_PATH,buf);
-	char *dic = TCHAR2char(buf);
-	string path = dic;
 	fstream out_file;
 	string filepath;
 	if(filename == ""){//如果是空就覆盖原始文件
-		filepath = path + "\\database\\card.txt";
+		filepath = "D:/github/ShoppingSystem/database/card.txt";
 	}else{
-		filepath = path + "\\database\\" + filename;
+		filepath = "D:/github/ShoppingSystem/database/" + filename;
 	}
 	out_file.open(filepath,ios::in);
     if(out_file){//如果存在该文件，就先删除
@@ -94,7 +89,6 @@ bool DbUtil::exportCardData(string filename){
 	}
 	out_file.close();
 	filepath = replace_all(filepath,"\\","/");//获取当前程序目录
-	//filepath = "C:/Users/hank/Desktop/国内pnr导入/作业/member3.txt";
 	string sql = "select card_code,card_money into outfile '" + filepath +  "' lines terminated by '\r\n' from card";
 	mysql_query(myConn,sql.c_str());//导出购物卡数据
 	long row = mysql_affected_rows(myConn);//导出记录数
@@ -113,16 +107,12 @@ bool DbUtil::exportCardData(string filename){
 
 bool DbUtil::exportMemberData(string filename){
 
-	TCHAR buf[MAX_PATH];
-	GetCurrentDirectory(MAX_PATH,buf);
-	char *dic = TCHAR2char(buf);
-	string path = dic;
 	fstream out_file;
 	string filepath;
 	if(filename == ""){
-		filepath = path + "\\database\\member.txt";
+		filepath = "D:/github/ShoppingSystem/database/member.txt";
 	}else{
-		filepath = path + "\\database\\" + filename;
+		filepath = "D:/github/ShoppingSystem/database/" + filename;
 	}
 	out_file.open(filepath,ios::in);
     if(out_file){//如果存在该文件，就先删除
@@ -131,7 +121,6 @@ bool DbUtil::exportMemberData(string filename){
 	}
 	out_file.close();
 	filepath = replace_all(filepath,"\\","/");//获取当前程序目录
-	//filepath = "C:/Users/hank/Desktop/作业/member3.txt";
 	string sql = "select mem_code,mem_name,mem_sex,mem_phone,mem_score,mem_type into outfile '" + filepath +  "' lines terminated by '\r\n' from member";
 	mysql_query(myConn,sql.c_str());//导出会员数据
 	long row = mysql_affected_rows(myConn);//导出记录数

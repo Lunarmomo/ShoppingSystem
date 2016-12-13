@@ -1,5 +1,5 @@
-//学号：1352910 
-//姓名：周同     
+//Design Pattern Project
+//成员：1352910 周同，1452734 储港   
 //文件名：Cashier.cpp 
 //描述：收银员类的处理 
 
@@ -17,7 +17,7 @@ Cashier::~Cashier(){}
 void Cashier::outputToText()
 {
 	//ofstream fout("C:/Users/hank/Desktop/国内pnr导入/作业/record.txt");
-	ofstream fout("./database/record.txt");
+	ofstream fout("D:/github/ShoppingSystem/database/record.txt");
 	if(fout.is_open())
 	{
 		fout<<"***************本次消费清单及支付记录***************\n";

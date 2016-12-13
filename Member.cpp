@@ -1,11 +1,11 @@
-//学号：1352910 
-//姓名：周同     
+//Design Pattern Project
+//成员：1352910 周同，1452734 储港   
 //文件名：Member.cpp
 //描述:会员卡信息类的处理 
 
 #include "stdafx.h"
 #include "Member.h"
-
+using namespace std;
 
 string Member::getMemCode(){
 	return mem_code;
