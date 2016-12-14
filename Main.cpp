@@ -21,7 +21,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	cout << "Ñ¡Ôñ£º";
 	int select;
 	cin >> select;
-
 	while (select != 5) 
 	{
 		if (select == 1) {

@@ -112,10 +112,17 @@ void Pay::pay_way()
 	cin >> payIndex;
 	switch (payIndex)
 	{
-	case 1:pay_with_cash(); break;
-	case 2:pay_with_card(); break;
-	case 3:pay_with_shopcard(); break;
-	default:pay_way();
+	   case 1:
+		   pay_with_cash(); 
+		   break;
+	   case 2:
+		   pay_with_card(); 
+		   break;
+	   case 3:
+		   pay_with_shopcard(); 
+		   break;
+	   default:
+		   pay_way();
 	}
 }
 
